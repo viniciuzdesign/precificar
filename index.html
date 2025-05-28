@@ -134,15 +134,24 @@
                         <label class="block text-gray-700 font-medium mb-2">Taxa de Administração</label>
                         <div class="space-y-2">
                             <div class="flex items-center">
-                                <span class="text-sm text-gray-600 mr-2">Produtos acima de R$8,00:</span>
+                                <span class="text-sm text-gray-600 mr-2">Produtos acima de</span>
+                                <div class="relative flex items-center">
+                                    <span class="absolute left-3 text-gray-500">R$</span>
+                                    <input type="number" id="shopeeValorMinTaxa" value="8.00" step="0.01" class="pl-8 pr-3 py-2 border rounded-md w-24 focus:outline-none">
+                                </div>
+                                <span class="text-sm text-gray-600 mx-2">:</span>
                                 <div class="relative flex items-center">
                                     <span class="absolute left-3 text-gray-500">R$</span>
                                     <input type="number" id="taxaAdminAcima" value="4.40" step="0.01" class="pl-8 pr-3 py-2 border rounded-md w-32 focus:outline-none">
                                 </div>
                             </div>
                             <div class="flex items-center">
-                                <span class="text-sm text-gray-600 mr-2">Produtos até R$8,00:</span>
-                                <span class="text-sm text-gray-600">Valor da Venda ÷ 2</span>
+                                <span class="text-sm text-gray-600 mr-2">Produtos até</span>
+                                <div class="relative flex items-center">
+                                    <span class="absolute left-3 text-gray-500">R$</span>
+                                    <input type="number" id="shopeeValorMaxTaxa" value="8.00" step="0.01" class="pl-8 pr-3 py-2 border rounded-md w-24 focus:outline-none">
+                                </div>
+                                <span class="text-sm text-gray-600 ml-2">: Valor da Venda ÷ 2</span>
                             </div>
                         </div>
                     </div>
@@ -230,31 +239,73 @@
                     <!-- Taxa de Administração -->
                     <div class="input-group">
                         <label class="block text-gray-700 font-medium mb-2">Taxa de Administração</label>
-                        <div class="space-y-2">
+                        <div class="space-y-3">
                             <div class="flex items-center">
-                                <span class="text-sm text-gray-600 mr-2">Entre R$12,50 e R$29,00:</span>
+                                <span class="text-sm text-gray-600 mr-2">Entre</span>
                                 <div class="relative flex items-center">
                                     <span class="absolute left-3 text-gray-500">R$</span>
-                                    <input type="number" id="mlTaxaAdmin1" value="6.25" step="0.01" class="pl-8 pr-3 py-2 border rounded-md w-32 focus:outline-none">
+                                    <input type="number" id="mlValorMin1" value="12.50" step="0.01" class="pl-8 pr-3 py-2 border rounded-md w-24 focus:outline-none">
+                                </div>
+                                <span class="text-sm text-gray-600 mx-2">e</span>
+                                <div class="relative flex items-center">
+                                    <span class="absolute left-3 text-gray-500">R$</span>
+                                    <input type="number" id="mlValorMax1" value="29.00" step="0.01" class="pl-8 pr-3 py-2 border rounded-md w-24 focus:outline-none">
+                                </div>
+                                <span class="text-sm text-gray-600 mx-2">:</span>
+                                <div class="relative flex items-center">
+                                    <span class="absolute left-3 text-gray-500">R$</span>
+                                    <input type="number" id="mlTaxaAdmin1" value="6.25" step="0.01" class="pl-8 pr-3 py-2 border rounded-md w-24 focus:outline-none">
                                 </div>
                             </div>
                             <div class="flex items-center">
-                                <span class="text-sm text-gray-600 mr-2">Entre R$29,00 e R$50,00:</span>
+                                <span class="text-sm text-gray-600 mr-2">Entre</span>
                                 <div class="relative flex items-center">
                                     <span class="absolute left-3 text-gray-500">R$</span>
-                                    <input type="number" id="mlTaxaAdmin2" value="6.50" step="0.01" class="pl-8 pr-3 py-2 border rounded-md w-32 focus:outline-none">
+                                    <input type="number" id="mlValorMin2" value="29.00" step="0.01" class="pl-8 pr-3 py-2 border rounded-md w-24 focus:outline-none">
+                                </div>
+                                <span class="text-sm text-gray-600 mx-2">e</span>
+                                <div class="relative flex items-center">
+                                    <span class="absolute left-3 text-gray-500">R$</span>
+                                    <input type="number" id="mlValorMax2" value="50.00" step="0.01" class="pl-8 pr-3 py-2 border rounded-md w-24 focus:outline-none">
+                                </div>
+                                <span class="text-sm text-gray-600 mx-2">:</span>
+                                <div class="relative flex items-center">
+                                    <span class="absolute left-3 text-gray-500">R$</span>
+                                    <input type="number" id="mlTaxaAdmin2" value="6.50" step="0.01" class="pl-8 pr-3 py-2 border rounded-md w-24 focus:outline-none">
                                 </div>
                             </div>
                             <div class="flex items-center">
-                                <span class="text-sm text-gray-600 mr-2">Entre R$50,00 e R$79,00:</span>
+                                <span class="text-sm text-gray-600 mr-2">Entre</span>
                                 <div class="relative flex items-center">
                                     <span class="absolute left-3 text-gray-500">R$</span>
-                                    <input type="number" id="mlTaxaAdmin3" value="6.75" step="0.01" class="pl-8 pr-3 py-2 border rounded-md w-32 focus:outline-none">
+                                    <input type="number" id="mlValorMin3" value="50.00" step="0.01" class="pl-8 pr-3 py-2 border rounded-md w-24 focus:outline-none">
+                                </div>
+                                <span class="text-sm text-gray-600 mx-2">e</span>
+                                <div class="relative flex items-center">
+                                    <span class="absolute left-3 text-gray-500">R$</span>
+                                    <input type="number" id="mlValorMax3" value="79.00" step="0.01" class="pl-8 pr-3 py-2 border rounded-md w-24 focus:outline-none">
+                                </div>
+                                <span class="text-sm text-gray-600 mx-2">:</span>
+                                <div class="relative flex items-center">
+                                    <span class="absolute left-3 text-gray-500">R$</span>
+                                    <input type="number" id="mlTaxaAdmin3" value="6.75" step="0.01" class="pl-8 pr-3 py-2 border rounded-md w-24 focus:outline-none">
                                 </div>
                             </div>
                             <div class="flex items-center">
-                                <span class="text-sm text-gray-600 mr-2">Produtos até R$12,50:</span>
-                                <span class="text-sm text-gray-600">Valor da Venda ÷ 2</span>
+                                <span class="text-sm text-gray-600 mr-2">Produtos até</span>
+                                <div class="relative flex items-center">
+                                    <span class="absolute left-3 text-gray-500">R$</span>
+                                    <input type="number" id="mlValorMinTaxa" value="12.50" step="0.01" class="pl-8 pr-3 py-2 border rounded-md w-24 focus:outline-none">
+                                </div>
+                                <span class="text-sm text-gray-600 ml-2">: Valor da Venda ÷ 2</span>
+                            </div>
+                            <div class="flex items-center">
+                                <span class="text-sm text-gray-600 mr-2">Produtos acima de</span>
+                                <div class="relative flex items-center">
+                                    <span class="absolute left-3 text-gray-500">R$</span>
+                                    <input type="number" id="mlValorMaxTaxa" value="79.00" step="0.01" class="pl-8 pr-3 py-2 border rounded-md w-24 focus:outline-none">
+                                </div>
+                                <span class="text-sm text-gray-600 ml-2">: Não paga taxa de administração</span>
                             </div>
                         </div>
                     </div>
@@ -525,8 +576,9 @@
             function checkFreteRequirement() {
                 const valorVenda = parseFloat(document.getElementById('mlValorVenda').value) || 0;
                 const freteContainer = document.getElementById('freteContainer');
+                const valorMaxTaxa = parseFloat(document.getElementById('mlValorMaxTaxa').value) || 79;
                 
-                if (valorVenda >= 79) {
+                if (valorVenda >= valorMaxTaxa) {
                     freteContainer.classList.add('frete-alert');
                 } else {
                     freteContainer.classList.remove('frete-alert');
@@ -620,6 +672,8 @@
             // Calculate Shopee values
             function calculateShopeeValues(product) {
                 const taxaAdminAcima = parseFloat(document.getElementById('taxaAdminAcima').value);
+                const valorMinTaxa = parseFloat(document.getElementById('shopeeValorMinTaxa').value);
+                const valorMaxTaxa = parseFloat(document.getElementById('shopeeValorMaxTaxa').value);
                 const comissao = parseFloat(document.getElementById('comissao').value) / 100;
                 const impostoNF = parseFloat(document.getElementById('impostoNF').value) / 100;
                 const custoFixo = parseFloat(document.getElementById('custoFixo').value) / 100;
@@ -643,10 +697,12 @@
                 
                 // 4. Calcular Taxa de Administração
                 let taxaAdmin;
-                if (product.valorVenda > 8) {
+                if (product.valorVenda > valorMinTaxa) {
                     taxaAdmin = taxaAdminAcima;
-                } else {
+                } else if (product.valorVenda <= valorMaxTaxa) {
                     taxaAdmin = product.valorVenda / 2;
+                } else {
+                    taxaAdmin = taxaAdminAcima;
                 }
                 
                 // 5. Adicionar cupom referente ao Valor de Venda
@@ -687,6 +743,17 @@
                 const mlTaxaAdmin1 = parseFloat(document.getElementById('mlTaxaAdmin1').value);
                 const mlTaxaAdmin2 = parseFloat(document.getElementById('mlTaxaAdmin2').value);
                 const mlTaxaAdmin3 = parseFloat(document.getElementById('mlTaxaAdmin3').value);
+                
+                const mlValorMin1 = parseFloat(document.getElementById('mlValorMin1').value);
+                const mlValorMax1 = parseFloat(document.getElementById('mlValorMax1').value);
+                const mlValorMin2 = parseFloat(document.getElementById('mlValorMin2').value);
+                const mlValorMax2 = parseFloat(document.getElementById('mlValorMax2').value);
+                const mlValorMin3 = parseFloat(document.getElementById('mlValorMin3').value);
+                const mlValorMax3 = parseFloat(document.getElementById('mlValorMax3').value);
+                
+                const mlValorMinTaxa = parseFloat(document.getElementById('mlValorMinTaxa').value);
+                const mlValorMaxTaxa = parseFloat(document.getElementById('mlValorMaxTaxa').value);
+                
                 const comissao = product.comissao / 100; // Usando a comissão específica do produto
                 const impostoNF = parseFloat(document.getElementById('mlImpostoNF').value) / 100;
                 const custoFixo = parseFloat(document.getElementById('mlCustoFixo').value) / 100;
@@ -710,16 +777,20 @@
                 
                 // 4. Calcular Taxa de Administração
                 let taxaAdmin;
-                if (product.valorVenda <= 12.5) {
+                if (product.valorVenda >= mlValorMaxTaxa) {
+                    // Produtos acima de R$79 não pagam taxa de administração
+                    taxaAdmin = 0;
+                } else if (product.valorVenda <= mlValorMinTaxa) {
                     taxaAdmin = product.valorVenda / 2;
-                } else if (product.valorVenda > 12.5 && product.valorVenda <= 29) {
+                } else if (product.valorVenda > mlValorMin1 && product.valorVenda <= mlValorMax1) {
                     taxaAdmin = mlTaxaAdmin1;
-                } else if (product.valorVenda > 29 && product.valorVenda <= 50) {
+                } else if (product.valorVenda > mlValorMin2 && product.valorVenda <= mlValorMax2) {
                     taxaAdmin = mlTaxaAdmin2;
-                } else if (product.valorVenda > 50 && product.valorVenda <= 79) {
+                } else if (product.valorVenda > mlValorMin3 && product.valorVenda <= mlValorMax3) {
                     taxaAdmin = mlTaxaAdmin3;
                 } else {
-                    taxaAdmin = mlTaxaAdmin3; // Para valores acima de 79
+                    // Caso não se encaixe em nenhuma regra específica
+                    taxaAdmin = 0;
                 }
                 
                 // 5. Adicionar cupom referente ao Valor de Venda
@@ -975,7 +1046,8 @@
             const shopeeConfigInputs = [
                 'taxaAdminAcima', 'comissao', 'impostoNF', 'custoFixo',
                 'cupom1Min', 'cupom2Min', 'cupom3Min',
-                'cupom1Valor', 'cupom2Valor', 'cupom3Valor'
+                'cupom1Valor', 'cupom2Valor', 'cupom3Valor',
+                'shopeeValorMinTaxa', 'shopeeValorMaxTaxa'
             ];
             
             shopeeConfigInputs.forEach(inputId => {
@@ -1002,6 +1074,8 @@
             // Recalculate when ML configuration changes
             const mlConfigInputs = [
                 'mlTaxaAdmin1', 'mlTaxaAdmin2', 'mlTaxaAdmin3', 
+                'mlValorMin1', 'mlValorMax1', 'mlValorMin2', 'mlValorMax2', 'mlValorMin3', 'mlValorMax3',
+                'mlValorMinTaxa', 'mlValorMaxTaxa',
                 'mlImpostoNF', 'mlCustoFixo', 
                 'mlCupom1Min', 'mlCupom2Min', 'mlCupom3Min',
                 'mlCupom1Valor', 'mlCupom2Valor', 'mlCupom3Valor'
@@ -1027,6 +1101,11 @@
                             };
                         });
                         renderProducts();
+                    }
+                    
+                    // Atualizar o alerta de frete quando o valor máximo da taxa mudar
+                    if (inputId === 'mlValorMaxTaxa') {
+                        checkFreteRequirement();
                     }
                 });
             });
@@ -1092,5 +1171,5 @@
             });
         });
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'946f8f65a7a26eac',t:'MTc0ODQ1NDI2OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'946fd2d04382d7eb',t:'MTc0ODQ1NzAyOS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
