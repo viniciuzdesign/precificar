@@ -259,15 +259,6 @@
                         </div>
                     </div>
                     
-                    <!-- Comissão -->
-                    <div class="input-group">
-                        <label class="block text-gray-700 font-medium mb-2">Comissão</label>
-                        <div class="relative flex items-center">
-                            <input type="number" id="mlComissao" value="16.5" step="0.1" class="pl-3 pr-8 py-2 border rounded-md w-full focus:outline-none">
-                            <span class="absolute right-3 text-gray-500">%</span>
-                        </div>
-                    </div>
-                    
                     <!-- Imposto de NF -->
                     <div class="input-group">
                         <label class="block text-gray-700 font-medium mb-2">Imposto de NF</label>
@@ -366,7 +357,7 @@
                 </div>
                 
                 <div id="mlProductForm" class="hidden">
-                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
                         <div class="input-group">
                             <label class="block text-gray-700 font-medium mb-2">SKU</label>
                             <input type="text" id="mlSku" class="pl-3 pr-3 py-2 border rounded-md w-full focus:outline-none" placeholder="Ex: PROD001">
@@ -385,13 +376,20 @@
                                 <input type="number" id="mlValorVenda" step="0.01" class="pl-8 pr-3 py-2 border rounded-md w-full focus:outline-none" placeholder="0.00" oninput="checkFreteRequirement()">
                             </div>
                         </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
                         <div class="input-group">
                             <label class="block text-gray-700 font-medium mb-2">Nome do Produto</label>
                             <input type="text" id="mlNomeProduto" class="pl-3 pr-3 py-2 border rounded-md w-full focus:outline-none" placeholder="Ex: Camiseta Básica">
                         </div>
-                    </div>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                        <div class="input-group">
+                            <label class="block text-gray-700 font-medium mb-2">Comissão (%)</label>
+                            <div class="relative flex items-center">
+                                <input type="number" id="mlComissaoProduto" value="16.5" step="0.1" class="pl-3 pr-8 py-2 border rounded-md w-full focus:outline-none" placeholder="0.0">
+                                <span class="absolute right-3 text-gray-500">%</span>
+                            </div>
+                        </div>
                         <div class="input-group" id="freteContainer">
                             <label class="block text-gray-700 font-medium mb-2">Custo de Frete (R$)</label>
                             <div class="relative flex items-center">
@@ -399,6 +397,9 @@
                                 <input type="number" id="mlCustoFrete" step="0.01" class="pl-8 pr-3 py-2 border rounded-md w-full focus:outline-none" placeholder="0.00">
                             </div>
                         </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
                         <div class="input-group" id="descontoFreteContainer">
                             <label class="block text-gray-700 font-medium mb-2">Desconto no Frete (%)</label>
                             <div class="relative flex items-center">
@@ -579,6 +580,7 @@
                 const custo = parseFloat(document.getElementById('mlCusto').value);
                 const valorVenda = parseFloat(document.getElementById('mlValorVenda').value);
                 const nomeProduto = document.getElementById('mlNomeProduto').value;
+                const comissao = parseFloat(document.getElementById('mlComissaoProduto').value) || 16.5;
                 const custoFrete = parseFloat(document.getElementById('mlCustoFrete').value) || 0;
                 const descontoFrete = parseFloat(document.getElementById('mlDescontoFrete').value) || 0;
                 
@@ -592,6 +594,7 @@
                     custo,
                     valorVenda,
                     nomeProduto,
+                    comissao,
                     custoFrete,
                     descontoFrete,
                     marketplace: 'ml'
@@ -609,6 +612,7 @@
                 document.getElementById('mlCusto').value = '';
                 document.getElementById('mlValorVenda').value = '';
                 document.getElementById('mlNomeProduto').value = '';
+                document.getElementById('mlComissaoProduto').value = '16.5';
                 document.getElementById('mlCustoFrete').value = '';
                 document.getElementById('mlDescontoFrete').value = '';
             }
@@ -683,7 +687,7 @@
                 const mlTaxaAdmin1 = parseFloat(document.getElementById('mlTaxaAdmin1').value);
                 const mlTaxaAdmin2 = parseFloat(document.getElementById('mlTaxaAdmin2').value);
                 const mlTaxaAdmin3 = parseFloat(document.getElementById('mlTaxaAdmin3').value);
-                const comissao = parseFloat(document.getElementById('mlComissao').value) / 100;
+                const comissao = product.comissao / 100; // Usando a comissão específica do produto
                 const impostoNF = parseFloat(document.getElementById('mlImpostoNF').value) / 100;
                 const custoFixo = parseFloat(document.getElementById('mlCustoFixo').value) / 100;
                 
@@ -902,6 +906,7 @@
                                     <p><span class="font-medium">Nome:</span> ${product.nomeProduto}</p>
                                     <p><span class="font-medium">Custo:</span> R$ ${product.custo.toFixed(2)}</p>
                                     <p><span class="font-medium">Valor de Venda:</span> R$ ${product.valorVenda.toFixed(2)}</p>
+                                    <p><span class="font-medium">Comissão:</span> ${product.comissao.toFixed(1)}%</p>
                                     <p><span class="font-medium">Marketplace:</span> Mercado Livre</p>
                                 </div>
                             </div>
@@ -996,7 +1001,7 @@
             
             // Recalculate when ML configuration changes
             const mlConfigInputs = [
-                'mlTaxaAdmin1', 'mlTaxaAdmin2', 'mlTaxaAdmin3', 'mlComissao', 
+                'mlTaxaAdmin1', 'mlTaxaAdmin2', 'mlTaxaAdmin3', 
                 'mlImpostoNF', 'mlCustoFixo', 
                 'mlCupom1Min', 'mlCupom2Min', 'mlCupom3Min',
                 'mlCupom1Valor', 'mlCupom2Valor', 'mlCupom3Valor'
@@ -1011,6 +1016,7 @@
                                 custo: product.custo,
                                 valorVenda: product.valorVenda,
                                 nomeProduto: product.nomeProduto,
+                                comissao: product.comissao,
                                 custoFrete: product.custoFrete,
                                 descontoFrete: product.descontoFrete,
                                 marketplace: 'ml'
@@ -1056,10 +1062,12 @@
                     
                     // Add ML specific fields if applicable
                     if (product.marketplace === 'ml') {
+                        baseData['Comissão (%)'] = product.comissao;
                         baseData['Custo de Frete (R$)'] = product.custoFrete;
                         baseData['Desconto no Frete (%)'] = product.descontoFrete;
                         baseData['Frete Final (R$)'] = product.custoFreteFinal;
                     } else {
+                        baseData['Comissão (%)'] = '';
                         baseData['Custo de Frete (R$)'] = '';
                         baseData['Desconto no Frete (%)'] = '';
                         baseData['Frete Final (R$)'] = '';
@@ -1084,5 +1092,5 @@
             });
         });
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'946f77e9642ff211',t:'MTc0ODQ1MzMwNi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'946f8f65a7a26eac',t:'MTc0ODQ1NDI2OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
