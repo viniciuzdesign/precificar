@@ -53,8 +53,12 @@
             box-shadow: 0 0 0 3px rgba(255, 204, 0, 0.2);
         }
         
-        .product-row:nth-child(even) {
+        .product-row:nth-child(even).shopee-row {
             background-color: #fff0eb;
+        }
+        
+        .product-row:nth-child(even).ml-row {
+            background-color: #fffbeb;
         }
         
         .shopee-btn {
@@ -72,6 +76,22 @@
         
         .ml-btn:hover {
             background-color: #e6b800;
+        }
+        
+        .frete-alert {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(255, 204, 0, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(255, 204, 0, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(255, 204, 0, 0);
+            }
         }
     </style>
 </head>
@@ -184,38 +204,172 @@
                 </div>
             </div>
             
-            <!-- Mercado Livre Configuration (Hidden for now) -->
+            <!-- Mercado Livre Configuration -->
             <div id="mlConfig" class="ml-theme hidden bg-white rounded-lg shadow-md p-6 mb-8">
                 <h2 class="text-2xl font-semibold mb-6 text-gray-800">Configurações do Mercado Livre</h2>
-                <p class="text-gray-600">As configurações do Mercado Livre serão implementadas em breve.</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Taxa de Administração -->
+                    <div class="input-group">
+                        <label class="block text-gray-700 font-medium mb-2">Taxa de Administração</label>
+                        <div class="space-y-2">
+                            <div class="flex items-center">
+                                <span class="text-sm text-gray-600 mr-2">Entre R$12,50 e R$29,00:</span>
+                                <div class="relative flex items-center">
+                                    <span class="absolute left-3 text-gray-500">R$</span>
+                                    <input type="number" id="mlTaxaAdmin1" value="6.25" step="0.01" class="pl-8 pr-3 py-2 border rounded-md w-32 focus:outline-none">
+                                </div>
+                            </div>
+                            <div class="flex items-center">
+                                <span class="text-sm text-gray-600 mr-2">Entre R$29,00 e R$50,00:</span>
+                                <div class="relative flex items-center">
+                                    <span class="absolute left-3 text-gray-500">R$</span>
+                                    <input type="number" id="mlTaxaAdmin2" value="6.50" step="0.01" class="pl-8 pr-3 py-2 border rounded-md w-32 focus:outline-none">
+                                </div>
+                            </div>
+                            <div class="flex items-center">
+                                <span class="text-sm text-gray-600 mr-2">Entre R$50,00 e R$79,00:</span>
+                                <div class="relative flex items-center">
+                                    <span class="absolute left-3 text-gray-500">R$</span>
+                                    <input type="number" id="mlTaxaAdmin3" value="6.75" step="0.01" class="pl-8 pr-3 py-2 border rounded-md w-32 focus:outline-none">
+                                </div>
+                            </div>
+                            <div class="flex items-center">
+                                <span class="text-sm text-gray-600 mr-2">Produtos até R$12,50:</span>
+                                <span class="text-sm text-gray-600">Valor da Venda ÷ 2</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Comissão -->
+                    <div class="input-group">
+                        <label class="block text-gray-700 font-medium mb-2">Comissão</label>
+                        <div class="relative flex items-center">
+                            <input type="number" id="mlComissao" value="16.5" step="0.1" class="pl-3 pr-8 py-2 border rounded-md w-full focus:outline-none">
+                            <span class="absolute right-3 text-gray-500">%</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Imposto de NF -->
+                    <div class="input-group">
+                        <label class="block text-gray-700 font-medium mb-2">Imposto de NF</label>
+                        <div class="relative flex items-center">
+                            <input type="number" id="mlImpostoNF" value="12" step="0.1" class="pl-3 pr-8 py-2 border rounded-md w-full focus:outline-none">
+                            <span class="absolute right-3 text-gray-500">%</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Custo Fixo -->
+                    <div class="input-group">
+                        <label class="block text-gray-700 font-medium mb-2">Custo Fixo</label>
+                        <div class="relative flex items-center">
+                            <input type="number" id="mlCustoFixo" value="0" step="0.1" class="pl-3 pr-8 py-2 border rounded-md w-full focus:outline-none">
+                            <span class="absolute right-3 text-gray-500">%</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Cupons -->
+                <div class="mt-8">
+                    <h3 class="text-lg font-medium mb-4 text-gray-800">Cupons</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="input-group">
+                            <label class="block text-gray-700 text-sm mb-2">Compras acima de R$40,00</label>
+                            <div class="relative flex items-center">
+                                <span class="absolute left-3 text-gray-500">R$</span>
+                                <input type="number" id="mlCupom1Valor" value="0" step="0.5" class="pl-8 pr-3 py-2 border rounded-md w-full focus:outline-none">
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label class="block text-gray-700 text-sm mb-2">Compras acima de R$89,00</label>
+                            <div class="relative flex items-center">
+                                <span class="absolute left-3 text-gray-500">R$</span>
+                                <input type="number" id="mlCupom2Valor" value="0" step="0.5" class="pl-8 pr-3 py-2 border rounded-md w-full focus:outline-none">
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label class="block text-gray-700 text-sm mb-2">Compras acima de R$199,00</label>
+                            <div class="relative flex items-center">
+                                <span class="absolute left-3 text-gray-500">R$</span>
+                                <input type="number" id="mlCupom3Valor" value="0" step="0.5" class="pl-8 pr-3 py-2 border rounded-md w-full focus:outline-none">
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             
             <!-- Product Registration -->
             <div class="bg-white rounded-lg shadow-md p-6 mb-8">
                 <h2 class="text-2xl font-semibold mb-6 text-gray-800">Cadastro de Produtos</h2>
                 
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-                    <div class="input-group">
-                        <label class="block text-gray-700 font-medium mb-2">SKU</label>
-                        <input type="text" id="sku" class="pl-3 pr-3 py-2 border rounded-md w-full focus:outline-none" placeholder="Ex: PROD001">
-                    </div>
-                    <div class="input-group">
-                        <label class="block text-gray-700 font-medium mb-2">Custo (R$)</label>
-                        <div class="relative flex items-center">
-                            <span class="absolute left-3 text-gray-500">R$</span>
-                            <input type="number" id="custo" step="0.01" class="pl-8 pr-3 py-2 border rounded-md w-full focus:outline-none" placeholder="0.00">
+                <div id="shopeeProductForm">
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+                        <div class="input-group">
+                            <label class="block text-gray-700 font-medium mb-2">SKU</label>
+                            <input type="text" id="sku" class="pl-3 pr-3 py-2 border rounded-md w-full focus:outline-none" placeholder="Ex: PROD001">
+                        </div>
+                        <div class="input-group">
+                            <label class="block text-gray-700 font-medium mb-2">Custo (R$)</label>
+                            <div class="relative flex items-center">
+                                <span class="absolute left-3 text-gray-500">R$</span>
+                                <input type="number" id="custo" step="0.01" class="pl-8 pr-3 py-2 border rounded-md w-full focus:outline-none" placeholder="0.00">
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label class="block text-gray-700 font-medium mb-2">Valor de Venda (R$)</label>
+                            <div class="relative flex items-center">
+                                <span class="absolute left-3 text-gray-500">R$</span>
+                                <input type="number" id="valorVenda" step="0.01" class="pl-8 pr-3 py-2 border rounded-md w-full focus:outline-none" placeholder="0.00">
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label class="block text-gray-700 font-medium mb-2">Nome do Produto</label>
+                            <input type="text" id="nomeProduto" class="pl-3 pr-3 py-2 border rounded-md w-full focus:outline-none" placeholder="Ex: Camiseta Básica">
                         </div>
                     </div>
-                    <div class="input-group">
-                        <label class="block text-gray-700 font-medium mb-2">Valor de Venda (R$)</label>
-                        <div class="relative flex items-center">
-                            <span class="absolute left-3 text-gray-500">R$</span>
-                            <input type="number" id="valorVenda" step="0.01" class="pl-8 pr-3 py-2 border rounded-md w-full focus:outline-none" placeholder="0.00">
+                </div>
+                
+                <div id="mlProductForm" class="hidden">
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+                        <div class="input-group">
+                            <label class="block text-gray-700 font-medium mb-2">SKU</label>
+                            <input type="text" id="mlSku" class="pl-3 pr-3 py-2 border rounded-md w-full focus:outline-none" placeholder="Ex: PROD001">
+                        </div>
+                        <div class="input-group">
+                            <label class="block text-gray-700 font-medium mb-2">Custo (R$)</label>
+                            <div class="relative flex items-center">
+                                <span class="absolute left-3 text-gray-500">R$</span>
+                                <input type="number" id="mlCusto" step="0.01" class="pl-8 pr-3 py-2 border rounded-md w-full focus:outline-none" placeholder="0.00">
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label class="block text-gray-700 font-medium mb-2">Valor de Venda (R$)</label>
+                            <div class="relative flex items-center">
+                                <span class="absolute left-3 text-gray-500">R$</span>
+                                <input type="number" id="mlValorVenda" step="0.01" class="pl-8 pr-3 py-2 border rounded-md w-full focus:outline-none" placeholder="0.00" oninput="checkFreteRequirement()">
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label class="block text-gray-700 font-medium mb-2">Nome do Produto</label>
+                            <input type="text" id="mlNomeProduto" class="pl-3 pr-3 py-2 border rounded-md w-full focus:outline-none" placeholder="Ex: Camiseta Básica">
                         </div>
                     </div>
-                    <div class="input-group">
-                        <label class="block text-gray-700 font-medium mb-2">Nome do Produto</label>
-                        <input type="text" id="nomeProduto" class="pl-3 pr-3 py-2 border rounded-md w-full focus:outline-none" placeholder="Ex: Camiseta Básica">
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                        <div class="input-group" id="freteContainer">
+                            <label class="block text-gray-700 font-medium mb-2">Custo de Frete (R$)</label>
+                            <div class="relative flex items-center">
+                                <span class="absolute left-3 text-gray-500">R$</span>
+                                <input type="number" id="mlCustoFrete" step="0.01" class="pl-8 pr-3 py-2 border rounded-md w-full focus:outline-none" placeholder="0.00">
+                            </div>
+                        </div>
+                        <div class="input-group" id="descontoFreteContainer">
+                            <label class="block text-gray-700 font-medium mb-2">Desconto no Frete (%)</label>
+                            <div class="relative flex items-center">
+                                <input type="number" id="mlDescontoFrete" step="0.1" class="pl-3 pr-8 py-2 border rounded-md w-full focus:outline-none" placeholder="0.0">
+                                <span class="absolute right-3 text-gray-500">%</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 
@@ -249,7 +403,7 @@
                                 <th class="py-3 px-4 text-left">Nome</th>
                                 <th class="py-3 px-4 text-right">Custo (R$)</th>
                                 <th class="py-3 px-4 text-right">Venda (R$)</th>
-                                <th class="py-3 px-4 text-right">Total Shopee (R$)</th>
+                                <th class="py-3 px-4 text-right">Total Marketplace (R$)</th>
                                 <th class="py-3 px-4 text-right">Lucro (R$)</th>
                                 <th class="py-3 px-4 text-right">ROI (%)</th>
                                 <th class="py-3 px-4 text-center">Ações</th>
@@ -296,14 +450,21 @@
             const mlConfig = document.getElementById('mlConfig');
             const header = document.getElementById('header');
             const addProductBtn = document.getElementById('addProduct');
+            const shopeeProductForm = document.getElementById('shopeeProductForm');
+            const mlProductForm = document.getElementById('mlProductForm');
+            
+            let currentMarketplace = 'shopee';
             
             shopeeTab.addEventListener('click', function() {
                 shopeeTab.classList.add('active');
                 mlTab.classList.remove('active');
                 shopeeConfig.classList.remove('hidden');
                 mlConfig.classList.add('hidden');
+                shopeeProductForm.classList.remove('hidden');
+                mlProductForm.classList.add('hidden');
                 header.className = 'bg-gradient-to-r from-orange-500 to-red-600 text-white py-6 shadow-lg';
                 addProductBtn.className = 'shopee-btn hover:bg-orange-600 text-white font-medium py-2 px-6 rounded-md transition-colors duration-200 flex items-center';
+                currentMarketplace = 'shopee';
             });
             
             mlTab.addEventListener('click', function() {
@@ -311,15 +472,40 @@
                 shopeeTab.classList.remove('active');
                 mlConfig.classList.remove('hidden');
                 shopeeConfig.classList.add('hidden');
+                mlProductForm.classList.remove('hidden');
+                shopeeProductForm.classList.add('hidden');
                 header.className = 'bg-gradient-to-r from-yellow-400 to-yellow-600 text-gray-800 py-6 shadow-lg';
                 addProductBtn.className = 'ml-btn hover:bg-yellow-500 text-gray-800 font-medium py-2 px-6 rounded-md transition-colors duration-200 flex items-center';
+                currentMarketplace = 'ml';
+                checkFreteRequirement();
             });
             
             // Products array
-            let products = [];
+            let shopeeProducts = [];
+            let mlProducts = [];
+            
+            // Check if frete is required for ML
+            function checkFreteRequirement() {
+                const valorVenda = parseFloat(document.getElementById('mlValorVenda').value) || 0;
+                const freteContainer = document.getElementById('freteContainer');
+                
+                if (valorVenda >= 79) {
+                    freteContainer.classList.add('frete-alert');
+                } else {
+                    freteContainer.classList.remove('frete-alert');
+                }
+            }
             
             // Add product
             document.getElementById('addProduct').addEventListener('click', function() {
+                if (currentMarketplace === 'shopee') {
+                    addShopeeProduct();
+                } else {
+                    addMlProduct();
+                }
+            });
+            
+            function addShopeeProduct() {
                 const sku = document.getElementById('sku').value;
                 const custo = parseFloat(document.getElementById('custo').value);
                 const valorVenda = parseFloat(document.getElementById('valorVenda').value);
@@ -334,14 +520,15 @@
                     sku,
                     custo,
                     valorVenda,
-                    nomeProduto
+                    nomeProduto,
+                    marketplace: 'shopee'
                 };
                 
                 // Calculate values
                 const calculatedValues = calculateShopeeValues(product);
                 Object.assign(product, calculatedValues);
                 
-                products.push(product);
+                shopeeProducts.push(product);
                 renderProducts();
                 
                 // Clear form
@@ -349,7 +536,46 @@
                 document.getElementById('custo').value = '';
                 document.getElementById('valorVenda').value = '';
                 document.getElementById('nomeProduto').value = '';
-            });
+            }
+            
+            function addMlProduct() {
+                const sku = document.getElementById('mlSku').value;
+                const custo = parseFloat(document.getElementById('mlCusto').value);
+                const valorVenda = parseFloat(document.getElementById('mlValorVenda').value);
+                const nomeProduto = document.getElementById('mlNomeProduto').value;
+                const custoFrete = parseFloat(document.getElementById('mlCustoFrete').value) || 0;
+                const descontoFrete = parseFloat(document.getElementById('mlDescontoFrete').value) || 0;
+                
+                if (!sku || isNaN(custo) || isNaN(valorVenda) || !nomeProduto) {
+                    alert('Por favor, preencha todos os campos corretamente.');
+                    return;
+                }
+                
+                const product = {
+                    sku,
+                    custo,
+                    valorVenda,
+                    nomeProduto,
+                    custoFrete,
+                    descontoFrete,
+                    marketplace: 'ml'
+                };
+                
+                // Calculate values
+                const calculatedValues = calculateMlValues(product);
+                Object.assign(product, calculatedValues);
+                
+                mlProducts.push(product);
+                renderProducts();
+                
+                // Clear form
+                document.getElementById('mlSku').value = '';
+                document.getElementById('mlCusto').value = '';
+                document.getElementById('mlValorVenda').value = '';
+                document.getElementById('mlNomeProduto').value = '';
+                document.getElementById('mlCustoFrete').value = '';
+                document.getElementById('mlDescontoFrete').value = '';
+            }
             
             // Calculate Shopee values
             function calculateShopeeValues(product) {
@@ -406,7 +632,83 @@
                     taxaAdmin,
                     cupomValor,
                     comissaoValor,
-                    totalShopee,
+                    totalMarketplace: totalShopee,
+                    lucro,
+                    roi
+                };
+            }
+            
+            // Calculate Mercado Livre values
+            function calculateMlValues(product) {
+                const mlTaxaAdmin1 = parseFloat(document.getElementById('mlTaxaAdmin1').value);
+                const mlTaxaAdmin2 = parseFloat(document.getElementById('mlTaxaAdmin2').value);
+                const mlTaxaAdmin3 = parseFloat(document.getElementById('mlTaxaAdmin3').value);
+                const comissao = parseFloat(document.getElementById('mlComissao').value) / 100;
+                const impostoNF = parseFloat(document.getElementById('mlImpostoNF').value) / 100;
+                const custoFixo = parseFloat(document.getElementById('mlCustoFixo').value) / 100;
+                
+                const cupom1Valor = parseFloat(document.getElementById('mlCupom1Valor').value);
+                const cupom2Valor = parseFloat(document.getElementById('mlCupom2Valor').value);
+                const cupom3Valor = parseFloat(document.getElementById('mlCupom3Valor').value);
+                
+                // 1. Calcular Custo Fixo sobre o valor de Custo
+                const custoFixoValor = product.custo * custoFixo;
+                
+                // 2. Calcular Imposto de NF sobre o Valor de Venda
+                const impostoNFValor = product.valorVenda * impostoNF;
+                
+                // 3. Calcular custo real
+                const custoReal = product.custo + custoFixoValor + impostoNFValor;
+                
+                // 4. Calcular Taxa de Administração
+                let taxaAdmin;
+                if (product.valorVenda <= 12.5) {
+                    taxaAdmin = product.valorVenda / 2;
+                } else if (product.valorVenda > 12.5 && product.valorVenda <= 29) {
+                    taxaAdmin = mlTaxaAdmin1;
+                } else if (product.valorVenda > 29 && product.valorVenda <= 50) {
+                    taxaAdmin = mlTaxaAdmin2;
+                } else if (product.valorVenda > 50 && product.valorVenda <= 79) {
+                    taxaAdmin = mlTaxaAdmin3;
+                } else {
+                    taxaAdmin = mlTaxaAdmin3; // Para valores acima de 79
+                }
+                
+                // 5. Adicionar cupom referente ao Valor de Venda
+                let cupomValor = 0;
+                if (product.valorVenda >= 199) {
+                    cupomValor = cupom3Valor;
+                } else if (product.valorVenda >= 89) {
+                    cupomValor = cupom2Valor;
+                } else if (product.valorVenda >= 40) {
+                    cupomValor = cupom1Valor;
+                }
+                
+                // Calcular frete com desconto
+                let custoFreteFinal = product.custoFrete;
+                if (product.custoFrete > 0 && product.descontoFrete > 0) {
+                    custoFreteFinal = product.custoFrete * (1 - (product.descontoFrete / 100));
+                }
+                
+                // 6. Calcular quanto ficará com o Mercado Livre
+                const comissaoValor = product.valorVenda * comissao;
+                const totalML = comissaoValor + taxaAdmin + cupomValor + custoFreteFinal;
+                
+                // 7. Calcular Lucro em R$
+                const lucro = product.valorVenda - custoReal - totalML;
+                
+                // 8. Calcular ROI
+                const roi = (lucro / custoReal) * 100;
+                
+                return {
+                    custoFixoValor,
+                    impostoNFValor,
+                    custoReal,
+                    taxaAdmin,
+                    cupomValor,
+                    comissaoValor,
+                    custoFreteFinal,
+                    totalMarketplace: totalML,
                     lucro,
                     roi
                 };
@@ -415,8 +717,9 @@
             // Render products
             function renderProducts() {
                 const productsList = document.getElementById('productsList');
+                const allProducts = [...shopeeProducts, ...mlProducts];
                 
-                if (products.length === 0) {
+                if (allProducts.length === 0) {
                     productsList.innerHTML = `
                         <tr class="text-gray-500 text-center">
                             <td colspan="8" class="py-8">Nenhum produto cadastrado</td>
@@ -427,26 +730,29 @@
                 
                 productsList.innerHTML = '';
                 
-                products.forEach((product, index) => {
+                allProducts.forEach((product, index) => {
+                    const isShopee = product.marketplace === 'shopee';
+                    const rowClass = isShopee ? 'shopee-row' : 'ml-row';
+                    
                     const row = document.createElement('tr');
-                    row.className = 'product-row border-t';
+                    row.className = `product-row border-t ${rowClass}`;
                     
                     row.innerHTML = `
                         <td class="py-3 px-4">${product.sku}</td>
                         <td class="py-3 px-4">${product.nomeProduto}</td>
                         <td class="py-3 px-4 text-right">${product.custo.toFixed(2)}</td>
                         <td class="py-3 px-4 text-right">${product.valorVenda.toFixed(2)}</td>
-                        <td class="py-3 px-4 text-right">${product.totalShopee.toFixed(2)}</td>
+                        <td class="py-3 px-4 text-right">${product.totalMarketplace.toFixed(2)}</td>
                         <td class="py-3 px-4 text-right ${product.lucro < 0 ? 'text-red-600' : 'text-green-600'}">${product.lucro.toFixed(2)}</td>
                         <td class="py-3 px-4 text-right ${product.roi < 0 ? 'text-red-600' : 'text-green-600'}">${product.roi.toFixed(2)}%</td>
                         <td class="py-3 px-4 text-center">
-                            <button class="view-details text-blue-600 hover:text-blue-800 mr-2" data-index="${index}">
+                            <button class="view-details text-blue-600 hover:text-blue-800 mr-2" data-index="${index}" data-marketplace="${product.marketplace}">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                                     <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
                                     <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd" />
                                 </svg>
                             </button>
-                            <button class="delete-product text-red-600 hover:text-red-800" data-index="${index}">
+                            <button class="delete-product text-red-600 hover:text-red-800" data-index="${index}" data-marketplace="${product.marketplace}">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                                     <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
                                 </svg>
@@ -460,15 +766,24 @@
                 // Add event listeners for view details and delete buttons
                 document.querySelectorAll('.view-details').forEach(button => {
                     button.addEventListener('click', function() {
-                        const index = this.getAttribute('data-index');
-                        showProductDetails(products[index]);
+                        const index = parseInt(this.getAttribute('data-index'));
+                        const marketplace = this.getAttribute('data-marketplace');
+                        const product = marketplace === 'shopee' ? shopeeProducts[index] : mlProducts[index];
+                        showProductDetails(product);
                     });
                 });
                 
                 document.querySelectorAll('.delete-product').forEach(button => {
                     button.addEventListener('click', function() {
-                        const index = this.getAttribute('data-index');
-                        products.splice(index, 1);
+                        const index = parseInt(this.getAttribute('data-index'));
+                        const marketplace = this.getAttribute('data-marketplace');
+                        
+                        if (marketplace === 'shopee') {
+                            shopeeProducts.splice(index, 1);
+                        } else {
+                            mlProducts.splice(index, 1);
+                        }
+                        
                         renderProducts();
                     });
                 });
@@ -479,58 +794,118 @@
                 const modal = document.getElementById('productModal');
                 const details = document.getElementById('productDetails');
                 
-                details.innerHTML = `
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <h4 class="font-semibold text-lg mb-2">Informações do Produto</h4>
-                            <div class="space-y-2">
-                                <p><span class="font-medium">SKU:</span> ${product.sku}</p>
-                                <p><span class="font-medium">Nome:</span> ${product.nomeProduto}</p>
-                                <p><span class="font-medium">Custo:</span> R$ ${product.custo.toFixed(2)}</p>
-                                <p><span class="font-medium">Valor de Venda:</span> R$ ${product.valorVenda.toFixed(2)}</p>
+                if (product.marketplace === 'shopee') {
+                    details.innerHTML = `
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <h4 class="font-semibold text-lg mb-2">Informações do Produto</h4>
+                                <div class="space-y-2">
+                                    <p><span class="font-medium">SKU:</span> ${product.sku}</p>
+                                    <p><span class="font-medium">Nome:</span> ${product.nomeProduto}</p>
+                                    <p><span class="font-medium">Custo:</span> R$ ${product.custo.toFixed(2)}</p>
+                                    <p><span class="font-medium">Valor de Venda:</span> R$ ${product.valorVenda.toFixed(2)}</p>
+                                    <p><span class="font-medium">Marketplace:</span> Shopee</p>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <h4 class="font-semibold text-lg mb-2">Custos</h4>
+                                <div class="space-y-2">
+                                    <p><span class="font-medium">Custo Fixo:</span> R$ ${product.custoFixoValor.toFixed(2)}</p>
+                                    <p><span class="font-medium">Imposto NF:</span> R$ ${product.impostoNFValor.toFixed(2)}</p>
+                                    <p><span class="font-medium">Custo Real:</span> R$ ${product.custoReal.toFixed(2)}</p>
+                                </div>
                             </div>
                         </div>
                         
-                        <div>
-                            <h4 class="font-semibold text-lg mb-2">Custos</h4>
-                            <div class="space-y-2">
-                                <p><span class="font-medium">Custo Fixo:</span> R$ ${product.custoFixoValor.toFixed(2)}</p>
-                                <p><span class="font-medium">Imposto NF:</span> R$ ${product.impostoNFValor.toFixed(2)}</p>
-                                <p><span class="font-medium">Custo Real:</span> R$ ${product.custoReal.toFixed(2)}</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                            <div>
+                                <h4 class="font-semibold text-lg mb-2">Taxas Shopee</h4>
+                                <div class="space-y-2">
+                                    <p><span class="font-medium">Taxa de Administração:</span> R$ ${product.taxaAdmin.toFixed(2)}</p>
+                                    <p><span class="font-medium">Comissão:</span> R$ ${product.comissaoValor.toFixed(2)}</p>
+                                    <p><span class="font-medium">Cupom:</span> R$ ${product.cupomValor.toFixed(2)}</p>
+                                    <p><span class="font-medium">Total Shopee:</span> R$ ${product.totalMarketplace.toFixed(2)}</p>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-                        <div>
-                            <h4 class="font-semibold text-lg mb-2">Taxas Shopee</h4>
-                            <div class="space-y-2">
-                                <p><span class="font-medium">Taxa de Administração:</span> R$ ${product.taxaAdmin.toFixed(2)}</p>
-                                <p><span class="font-medium">Comissão:</span> R$ ${product.comissaoValor.toFixed(2)}</p>
-                                <p><span class="font-medium">Cupom:</span> R$ ${product.cupomValor.toFixed(2)}</p>
-                                <p><span class="font-medium">Total Shopee:</span> R$ ${product.totalShopee.toFixed(2)}</p>
+                            
+                            <div>
+                                <h4 class="font-semibold text-lg mb-2">Resultados</h4>
+                                <div class="space-y-2">
+                                    <p><span class="font-medium">Lucro:</span> <span class="${product.lucro < 0 ? 'text-red-600' : 'text-green-600'}">R$ ${product.lucro.toFixed(2)}</span></p>
+                                    <p><span class="font-medium">ROI:</span> <span class="${product.roi < 0 ? 'text-red-600' : 'text-green-600'}">${product.roi.toFixed(2)}%</span></p>
+                                    <p><span class="font-medium">Margem de Lucro:</span> <span class="${(product.lucro / product.valorVenda * 100) < 0 ? 'text-red-600' : 'text-green-600'}">${(product.lucro / product.valorVenda * 100).toFixed(2)}%</span></p>
+                                </div>
                             </div>
                         </div>
                         
-                        <div>
-                            <h4 class="font-semibold text-lg mb-2">Resultados</h4>
-                            <div class="space-y-2">
-                                <p><span class="font-medium">Lucro:</span> <span class="${product.lucro < 0 ? 'text-red-600' : 'text-green-600'}">R$ ${product.lucro.toFixed(2)}</span></p>
-                                <p><span class="font-medium">ROI:</span> <span class="${product.roi < 0 ? 'text-red-600' : 'text-green-600'}">${product.roi.toFixed(2)}%</span></p>
-                                <p><span class="font-medium">Margem de Lucro:</span> <span class="${(product.lucro / product.valorVenda * 100) < 0 ? 'text-red-600' : 'text-green-600'}">${(product.lucro / product.valorVenda * 100).toFixed(2)}%</span></p>
+                        <div class="mt-6 p-4 bg-gray-50 rounded-lg">
+                            <h4 class="font-semibold text-lg mb-2">Resumo</h4>
+                            <p class="text-sm text-gray-700">
+                                Para o produto <strong>${product.nomeProduto}</strong> com custo de <strong>R$ ${product.custo.toFixed(2)}</strong> e valor de venda de <strong>R$ ${product.valorVenda.toFixed(2)}</strong>, 
+                                o lucro estimado é de <strong class="${product.lucro < 0 ? 'text-red-600' : 'text-green-600'}">R$ ${product.lucro.toFixed(2)}</strong> com um ROI de 
+                                <strong class="${product.roi < 0 ? 'text-red-600' : 'text-green-600'}">${product.roi.toFixed(2)}%</strong>.
+                            </p>
+                        </div>
+                    `;
+                } else {
+                    details.innerHTML = `
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <h4 class="font-semibold text-lg mb-2">Informações do Produto</h4>
+                                <div class="space-y-2">
+                                    <p><span class="font-medium">SKU:</span> ${product.sku}</p>
+                                    <p><span class="font-medium">Nome:</span> ${product.nomeProduto}</p>
+                                    <p><span class="font-medium">Custo:</span> R$ ${product.custo.toFixed(2)}</p>
+                                    <p><span class="font-medium">Valor de Venda:</span> R$ ${product.valorVenda.toFixed(2)}</p>
+                                    <p><span class="font-medium">Marketplace:</span> Mercado Livre</p>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <h4 class="font-semibold text-lg mb-2">Custos</h4>
+                                <div class="space-y-2">
+                                    <p><span class="font-medium">Custo Fixo:</span> R$ ${product.custoFixoValor.toFixed(2)}</p>
+                                    <p><span class="font-medium">Imposto NF:</span> R$ ${product.impostoNFValor.toFixed(2)}</p>
+                                    <p><span class="font-medium">Custo Real:</span> R$ ${product.custoReal.toFixed(2)}</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    
-                    <div class="mt-6 p-4 bg-gray-50 rounded-lg">
-                        <h4 class="font-semibold text-lg mb-2">Resumo</h4>
-                        <p class="text-sm text-gray-700">
-                            Para o produto <strong>${product.nomeProduto}</strong> com custo de <strong>R$ ${product.custo.toFixed(2)}</strong> e valor de venda de <strong>R$ ${product.valorVenda.toFixed(2)}</strong>, 
-                            o lucro estimado é de <strong class="${product.lucro < 0 ? 'text-red-600' : 'text-green-600'}">R$ ${product.lucro.toFixed(2)}</strong> com um ROI de 
-                            <strong class="${product.roi < 0 ? 'text-red-600' : 'text-green-600'}">${product.roi.toFixed(2)}%</strong>.
-                        </p>
-                    </div>
-                `;
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                            <div>
+                                <h4 class="font-semibold text-lg mb-2">Taxas Mercado Livre</h4>
+                                <div class="space-y-2">
+                                    <p><span class="font-medium">Taxa de Administração:</span> R$ ${product.taxaAdmin.toFixed(2)}</p>
+                                    <p><span class="font-medium">Comissão:</span> R$ ${product.comissaoValor.toFixed(2)}</p>
+                                    <p><span class="font-medium">Cupom:</span> R$ ${product.cupomValor.toFixed(2)}</p>
+                                    <p><span class="font-medium">Custo de Frete:</span> R$ ${product.custoFrete.toFixed(2)}</p>
+                                    ${product.descontoFrete > 0 ? `<p><span class="font-medium">Desconto no Frete:</span> ${product.descontoFrete.toFixed(2)}%</p>` : ''}
+                                    ${product.descontoFrete > 0 ? `<p><span class="font-medium">Frete Final:</span> R$ ${product.custoFreteFinal.toFixed(2)}</p>` : ''}
+                                    <p><span class="font-medium">Total Mercado Livre:</span> R$ ${product.totalMarketplace.toFixed(2)}</p>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <h4 class="font-semibold text-lg mb-2">Resultados</h4>
+                                <div class="space-y-2">
+                                    <p><span class="font-medium">Lucro:</span> <span class="${product.lucro < 0 ? 'text-red-600' : 'text-green-600'}">R$ ${product.lucro.toFixed(2)}</span></p>
+                                    <p><span class="font-medium">ROI:</span> <span class="${product.roi < 0 ? 'text-red-600' : 'text-green-600'}">${product.roi.toFixed(2)}%</span></p>
+                                    <p><span class="font-medium">Margem de Lucro:</span> <span class="${(product.lucro / product.valorVenda * 100) < 0 ? 'text-red-600' : 'text-green-600'}">${(product.lucro / product.valorVenda * 100).toFixed(2)}%</span></p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-6 p-4 bg-gray-50 rounded-lg">
+                            <h4 class="font-semibold text-lg mb-2">Resumo</h4>
+                            <p class="text-sm text-gray-700">
+                                Para o produto <strong>${product.nomeProduto}</strong> com custo de <strong>R$ ${product.custo.toFixed(2)}</strong> e valor de venda de <strong>R$ ${product.valorVenda.toFixed(2)}</strong>, 
+                                o lucro estimado é de <strong class="${product.lucro < 0 ? 'text-red-600' : 'text-green-600'}">R$ ${product.lucro.toFixed(2)}</strong> com um ROI de 
+                                <strong class="${product.roi < 0 ? 'text-red-600' : 'text-green-600'}">${product.roi.toFixed(2)}%</strong>.
+                            </p>
+                        </div>
+                    `;
+                }
                 
                 modal.classList.remove('hidden');
             }
@@ -547,21 +922,51 @@
                 }
             });
             
-            // Recalculate when configuration changes
-            const configInputs = [
+            // Recalculate when Shopee configuration changes
+            const shopeeConfigInputs = [
                 'taxaAdminAcima', 'comissao', 'impostoNF', 'custoFixo',
                 'cupom1Valor', 'cupom2Valor', 'cupom3Valor'
             ];
             
-            configInputs.forEach(inputId => {
+            shopeeConfigInputs.forEach(inputId => {
                 document.getElementById(inputId).addEventListener('change', function() {
-                    if (products.length > 0) {
-                        products = products.map(product => {
+                    if (shopeeProducts.length > 0) {
+                        shopeeProducts = shopeeProducts.map(product => {
                             const calculatedValues = calculateShopeeValues({
                                 sku: product.sku,
                                 custo: product.custo,
                                 valorVenda: product.valorVenda,
-                                nomeProduto: product.nomeProduto
+                                nomeProduto: product.nomeProduto,
+                                marketplace: 'shopee'
+                            });
+                            return {
+                                ...product,
+                                ...calculatedValues
+                            };
+                        });
+                        renderProducts();
+                    }
+                });
+            });
+            
+            // Recalculate when ML configuration changes
+            const mlConfigInputs = [
+                'mlTaxaAdmin1', 'mlTaxaAdmin2', 'mlTaxaAdmin3', 'mlComissao', 
+                'mlImpostoNF', 'mlCustoFixo', 'mlCupom1Valor', 'mlCupom2Valor', 'mlCupom3Valor'
+            ];
+            
+            mlConfigInputs.forEach(inputId => {
+                document.getElementById(inputId).addEventListener('change', function() {
+                    if (mlProducts.length > 0) {
+                        mlProducts = mlProducts.map(product => {
+                            const calculatedValues = calculateMlValues({
+                                sku: product.sku,
+                                custo: product.custo,
+                                valorVenda: product.valorVenda,
+                                nomeProduto: product.nomeProduto,
+                                custoFrete: product.custoFrete,
+                                descontoFrete: product.descontoFrete,
+                                marketplace: 'ml'
                             });
                             return {
                                 ...product,
@@ -575,14 +980,17 @@
             
             // Export to Excel
             document.getElementById('exportExcel').addEventListener('click', function() {
-                if (products.length === 0) {
+                const allProducts = [...shopeeProducts, ...mlProducts];
+                
+                if (allProducts.length === 0) {
                     alert('Não há produtos para exportar.');
                     return;
                 }
                 
                 // Prepare data for export
-                const excelData = products.map(product => {
-                    return {
+                const excelData = allProducts.map(product => {
+                    const baseData = {
+                        'Marketplace': product.marketplace === 'shopee' ? 'Shopee' : 'Mercado Livre',
                         'SKU': product.sku,
                         'Nome do Produto': product.nomeProduto,
                         'Custo (R$)': product.custo,
@@ -593,11 +1001,24 @@
                         'Taxa de Administração (R$)': product.taxaAdmin,
                         'Comissão (R$)': product.comissaoValor,
                         'Cupom (R$)': product.cupomValor,
-                        'Total Shopee (R$)': product.totalShopee,
+                        'Total Marketplace (R$)': product.totalMarketplace,
                         'Lucro (R$)': product.lucro,
                         'ROI (%)': product.roi,
                         'Margem de Lucro (%)': (product.lucro / product.valorVenda * 100)
                     };
+                    
+                    // Add ML specific fields if applicable
+                    if (product.marketplace === 'ml') {
+                        baseData['Custo de Frete (R$)'] = product.custoFrete;
+                        baseData['Desconto no Frete (%)'] = product.descontoFrete;
+                        baseData['Frete Final (R$)'] = product.custoFreteFinal;
+                    } else {
+                        baseData['Custo de Frete (R$)'] = '';
+                        baseData['Desconto no Frete (%)'] = '';
+                        baseData['Frete Final (R$)'] = '';
+                    }
+                    
+                    return baseData;
                 });
                 
                 // Create worksheet
@@ -612,9 +1033,9 @@
                 const data = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
                 
                 // Save file
-                saveAs(data, 'Produtos_Shopee_' + new Date().toISOString().split('T')[0] + '.xlsx');
+                saveAs(data, 'Produtos_Marketplace_' + new Date().toISOString().split('T')[0] + '.xlsx');
             });
         });
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'946f4302a320a189',t:'MTc0ODQ1MTEzOS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'946f6930f370a4f6',t:'MTc0ODQ1MjcwMy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
